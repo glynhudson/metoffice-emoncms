@@ -21,16 +21,19 @@ latitude_f = float(latitude)
 longitude_f = float(longitude)
 x = M.nearest_loc_obs(latitude_f,longitude_f)
 
-# y = metoffer.Weather(x)
-# pprint.pprint(y.data)
+#y = metoffer.Weather(x)
+#pprint.pprint(y.data)
 
 # Create JSON string
-a = json.dumps(x)
-b = json.loads(a)
+json_data = json.dumps(x)
+json_object = json.loads(json_data)
+json_formatted_str = (json.dumps(json_object, indent=5))
+
+#print(json_formatted_str)
 
 # Extract latest temperature
-ambient_temp = b['SiteRep']['DV']['Location']['Period'][1]['Rep']['T']
-print("Ambient Temp: " + ambient_temp)
+ambient_temp = json_object['SiteRep']['DV']['Location']['Period'][1]['Rep'][14]['T']
+pprint.pprint(ambient_temp)
 
 # conbert to float
 ambient_temp_float=float(ambient_temp)
