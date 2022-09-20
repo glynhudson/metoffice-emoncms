@@ -1,3 +1,11 @@
+# Install
+
+```
+git clone https://github.com/glynhudson/metoffice-emoncms
+cd metoffice-emoncms
+```
+
+
 ## Install Met offer
 
 ```
