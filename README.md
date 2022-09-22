@@ -19,6 +19,11 @@ sudo touch /var/log/ambient-temp.log
 sudo chmod 777 /var/log/ambient-temp.log
 ```
 
+## Create .env
+
+`mv example.env .env`
+
+
 ## Create cron every hour
 
 `contab -e`
