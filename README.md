@@ -23,5 +23,5 @@ sudo chmod 777 /var/log/ambient-temp.log
 
 `contab -e`
 
-`0 * * * * /usr/bin/python3 /home/pi/metoffice-emoncms/ambient-temp.py >> /var/log/ambient-temp.log`
+`0 * * * * /usr/bin/python3 /home/pi/metoffice-emoncms/metoffice-emoncms.py >> /var/log/ambient-temp.log`
 
