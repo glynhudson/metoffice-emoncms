@@ -2,16 +2,13 @@
 
 ```
 git clone https://github.com/glynhudson/metoffice-emoncms
-cd metoffice-emoncms
 ```
 
 
-## Install Met offer
+## Install modules
 
 ```
-git clone https://github.com/sludgedesk/metoffer
-cd metoffer
-pip3 install .
+pip3 install postcodes_io_api python-dotenv
 ```
 
 

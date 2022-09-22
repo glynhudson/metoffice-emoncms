@@ -2,16 +2,23 @@ import http.client
 import ast
 import requests
 import postcodes_io_api
+import os
+from dotenv import load_dotenv
 from datetime import datetime
 
-post_code = "SW11 7US"
-emoncms_apikey = 'xxxxxxxxxxxxxxx'
+load_dotenv()
+
+
+post_code = os.getenv('POSTCODE')
+emoncms_apikey = os.getenv('EMONCMS')
+client_id=os.getenv('CLIENTID')
+secret=os.getenv('SECRET')
 
 conn = http.client.HTTPSConnection("api-metoffice.apiconnect.ibmcloud.com")
 
 headers = {
-    'X-IBM-Client-Id': "xxxxxxxxxxxxxx",
-    'X-IBM-Client-Secret': "xxxxxxxxxxxxxxxxxxx",
+    'X-IBM-Client-Id': client_id,
+    'X-IBM-Client-Secret': secret,
     'accept': "application/json"
     }
 
