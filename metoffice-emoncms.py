@@ -1,49 +1,47 @@
-# Post local temperature data to Emoncms
-# OpenEnergyMonitor.og
-
-import metoffer
-import pprint
-import json
+import http.client
+import ast
 import requests
+import postcodes_io_api
 from datetime import datetime
 
-# API keys
-datapoint_apikey = 'xxxxxx'
-emoncms_apikey = 'xxxxxx'
-latitude = 'xx.xxx'
-longitude = '-xxx.xx'
+post_code = "LL55 3NR"
+emoncms_apikey = 'e85005cdc70bfb218cb56f6ce6ed3630'
 
-# Setup Metoffer
-M = metoffer.MetOffer(datapoint_apikey)
+conn = http.client.HTTPSConnection("api-metoffice.apiconnect.ibmcloud.com")
 
-# Get data from nearest observation station
-latitude_f = float(latitude)
-longitude_f = float(longitude)
-x = M.nearest_loc_obs(latitude_f,longitude_f)
+headers = {
+    'X-IBM-Client-Id': "570c8c5965510686d5e5a033434113f2",
+    'X-IBM-Client-Secret': "70a7f96e4af67c6c5540154956d53b2b",
+    'accept': "application/json"
+    }
 
-# y = metoffer.Weather(x)
-# pprint.pprint(y.data)
+# Get longitude and latitude from postcode
+postcodes_conn = postcodes_io_api.Api()
+postcode = postcodes_conn.get_postcode(post_code)
+latitude = str(postcode['result']['latitude'])
+longitude = str(postcode['result']['longitude'])
 
-# Create JSON string
-a = json.dumps(x)
-b = json.loads(a)
+url = "/v0/forecasts/point/hourly?excludeParameterMetadata=true&includeLocationName=false&latitude="+latitude+"&longitude="+longitude
 
-# Extract latest temperature
-ambient_temp = b['SiteRep']['DV']['Location']['Period'][1]['Rep']['T']
-print("Ambient Temp: " + ambient_temp)
+# print(url)
 
-# conbert to float
-ambient_temp_float=float(ambient_temp)
+conn.request("GET", url, headers=headers)
+
+res = conn.getresponse()
+data = res.read()
+# print(data)
+a = ast.literal_eval(data.decode('utf-8'))
+
+ambient_temp = a['features'][0]['properties']['timeSeries'][0]['screenTemperature']
+last_updated = a['features'][0]['properties']['timeSeries'][0]['time']
+
+print("Now: "+str(datetime.now()))
+print("Ambient temp: "+str(ambient_temp))
+print("Last updated: "+last_updated)
 
 # Post to Emoncms
-if type(ambient_temp_float) == float:
-    payload = {'csv':ambient_temp_float, 'apikey':emoncms_apikey}
+if type(ambient_temp) == float:
+    payload = {'csv':ambient_temp, 'apikey':emoncms_apikey}
     url_emoncms = 'https://emoncms.org/input/post?node=ambient_temp'
     r = requests.post(url_emoncms, params=(payload))
     print ('Emoncms: '+r.text)
-
-print(datetime.now())
-
-    
-    
-    
