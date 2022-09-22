@@ -4,14 +4,14 @@ import requests
 import postcodes_io_api
 from datetime import datetime
 
-post_code = "LL55 3NR"
-emoncms_apikey = 'e85005cdc70bfb218cb56f6ce6ed3630'
+post_code = "SW11 7US"
+emoncms_apikey = 'xxxxxxxxxxxxxxx'
 
 conn = http.client.HTTPSConnection("api-metoffice.apiconnect.ibmcloud.com")
 
 headers = {
-    'X-IBM-Client-Id': "570c8c5965510686d5e5a033434113f2",
-    'X-IBM-Client-Secret': "70a7f96e4af67c6c5540154956d53b2b",
+    'X-IBM-Client-Id': "xxxxxxxxxxxxxx",
+    'X-IBM-Client-Secret': "xxxxxxxxxxxxxxxxxxx",
     'accept': "application/json"
     }
 
