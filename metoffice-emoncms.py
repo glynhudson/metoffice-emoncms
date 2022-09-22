@@ -49,6 +49,6 @@ print("Last updated: "+last_updated)
 # Post to Emoncms
 if type(ambient_temp) == float:
     payload = {'csv':ambient_temp, 'apikey':emoncms_apikey}
-    url_emoncms = 'https://emoncms.org/input/post?node=ambient_temp'
+    url_emoncms = 'https://emoncms.org/input/post?node=outside_temp'
     r = requests.post(url_emoncms, params=(payload))
     print ('Emoncms: '+r.text)
