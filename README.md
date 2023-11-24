@@ -43,7 +43,7 @@ Emoncms: ok
 
 The current temperature from datahub is only updated every 1hr, so not point making more regular calls to the API 
 
-`contab -e`
+`crontab -e`
 
 `0 * * * * /usr/bin/python3 /home/pi/metoffice-emoncms/metoffice-emoncms.py >> /var/log/ambient-temp.log`
 
